@@ -264,7 +264,9 @@ html.h #skinshelf .gallery{width:min(660px,calc((var(--avail) - var(--cardpad) -
 .links .note{color:var(--muted);font-size:.85rem}
 
 /* automation */
-.auto{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.auto{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.auto .logo{display:grid;place-items:center;width:44px;height:44px;margin-bottom:16px;border-radius:10px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+.auto .logo img{display:block;width:26px;height:26px;border-radius:5px}
 .auto>div{background:var(--slate-2);border:1px solid var(--line);border-radius:12px;padding:26px}
 .auto h3{font-size:1.2rem;font-weight:600;margin-bottom:10px;color:var(--signal)}
 .auto p{color:var(--muted);font-size:.97rem}
@@ -363,7 +365,7 @@ html.h .rail li:last-child a{align-items:flex-end}
   .next-icon svg{transform:rotate(135deg)}
   .cards{grid-template-columns:1fr 1fr}
   .gallery{width:100%}
-  .auto{grid-template-columns:1fr}
+  .auto{grid-template-columns:1fr 1fr}
   .feature{padding:26px}
 }
 @media (max-width:560px){
@@ -378,6 +380,7 @@ html.h .rail li:last-child a{align-items:flex-end}
   .theme-toggle{width:32px;height:32px;margin-left:0;flex:none}
   .panel{padding-top:52px;padding-bottom:52px}
   .cards{grid-template-columns:1fr}
+  .auto{grid-template-columns:1fr}
   .feature,.cert-main{padding:22px}
   .layer{grid-template-columns:1fr;gap:2px}
   .phones{gap:12px}
@@ -502,7 +505,7 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
     <div>
       <ol class="stackviz" reversed aria-label="Skills by layer, from network up to automation">
         <span class="packet" aria-hidden="true"></span>
-        <li class="layer" style="--i:5"><b>Automation</b><span>n8n, GoHighLevel, Python, RPA and AI integrations</span></li>
+        <li class="layer" style="--i:5"><b>Automation</b><span>n8n, Zapier, GoHighLevel, Python, RPA and AI integrations</span></li>
         <li class="layer" style="--i:4"><b>Applications</b><span>Next.js, React Native, Laravel, HTML, CSS, JavaScript</span></li>
         <li class="layer" style="--i:3"><b>APIs</b><span>NestJS, Laravel, FastAPI, Flask, TypeScript, PHP, Python</span></li>
         <li class="layer" style="--i:2"><b>Data</b><span>PostgreSQL, MySQL, Prisma, SQLAlchemy, Redis</span></li>
@@ -673,14 +676,22 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
   <p class="lede">I automate the busywork around a business: leads, follow-ups, reports and the hand-offs between tools that don't talk to each other.</p>
   <div class="auto">
     <div>
+      <span class="logo"><img src="img/logos/n8n.svg" alt="n8n logo" width="26" height="26"></span>
       <h3>n8n</h3>
       <p>Workflows that connect apps through webhooks and APIs. They move data between systems, trigger alerts, and run scheduled jobs with error handling so nothing fails silently.</p>
     </div>
     <div>
+      <span class="logo"><img src="img/logos/zapier.svg" alt="Zapier logo" width="26" height="26"></span>
+      <h3>Zapier</h3>
+      <p>Quick, reliable zaps between the everyday tools a team already uses: forms to CRM, new leads to Slack or email, and spreadsheets kept in sync, with filters and paths so each record goes where it should.</p>
+    </div>
+    <div>
+      <span class="logo"><img src="img/logos/gohighlevel.png" alt="GoHighLevel logo" width="26" height="26"></span>
       <h3>GoHighLevel</h3>
       <p>CRM pipelines, lead capture, and automated SMS and email follow-ups. Workflows move contacts through each stage on their own, and integrations keep GHL in sync with the rest of the stack.</p>
     </div>
     <div>
+      <span class="logo"><img src="img/logos/python.svg" alt="Python logo" width="26" height="26"></span>
       <h3>Python</h3>
       <p>Scripts and services for the jobs no-code tools can't handle: custom API integrations, data cleanup and imports, scheduled reports, and back-end endpoints that workflows can call.</p>
     </div>
