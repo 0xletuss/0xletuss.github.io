@@ -102,7 +102,11 @@ h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:800;letter-spacing:-.025em;l
 .links .note{color:var(--muted);font-size:.85rem}
 
 /* skills */
-.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.skills{display:grid;grid-template-columns:repeat(5,1fr);gap:32px}
+.auto{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.auto>div{background:var(--slate-2);border:1px solid var(--line);border-radius:12px;padding:26px}
+.auto h3{font-size:1.2rem;font-weight:600;margin-bottom:10px;color:var(--vfd)}
+.auto p{color:var(--muted);font-size:.98rem}
 .skills h3{font-size:1.05rem;font-weight:600;margin-bottom:12px}
 .skills ul{list-style:none;color:var(--muted)}
 .skills li{padding:3px 0}
@@ -123,6 +127,7 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
   .proj{grid-template-columns:1fr;gap:12px}
   .links{flex-direction:row;flex-wrap:wrap;gap:18px}
   .skills{grid-template-columns:repeat(2,1fr)}
+  .auto{grid-template-columns:1fr}
   .feature{padding:28px}
 }
 @media (max-width:560px){
@@ -145,6 +150,7 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
   <a class="brand" href="#top">Earl Lawrence Banawa</a>
   <nav>
     <a href="#work">Work</a>
+    <a class="hide-sm" href="#automation">Automation</a>
     <a class="hide-sm" href="#skills">Skills</a>
     <a class="hide-sm" href="#about">About</a>
     <a href="#contact">Contact</a>
@@ -155,7 +161,7 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
 <div class="hero">
   <div>
     <h1>Full-stack developer building software for real businesses.</h1>
-    <p>I design and build point-of-sale, e-commerce and delivery systems, from the database and Python API to the web and Android front end.</p>
+    <p>I design and build point-of-sale, e-commerce and delivery systems, from the database and Python API to the web and Android front end, and automate the work around them with n8n, GoHighLevel and Python.</p>
     <div class="cta">
       <a class="btn primary" href="#work">View projects</a>
       <a class="btn ghost" href="#contact">Get in touch</a>
@@ -170,7 +176,7 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
     <div class="status">Open to opportunities</div>
     <ul class="facts">
       <li><span>Location</span><span>Philippines</span></li>
-      <li><span>Focus</span><span>Back-end APIs, web apps</span></li>
+      <li><span>Focus</span><span>APIs, web apps, automation</span></li>
       <li><span>Core stack</span><span>Python, FastAPI, Flask, MySQL</span></li>
       <li><span>Apps built</span><span>6</span></li>
     </ul>
@@ -267,13 +273,33 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
   </ul>
 </section>
 
+<section id="automation">
+  <h2>Automation</h2>
+  <p class="lede">I also automate the busywork around a business: leads, follow-ups, reports and the hand-offs between tools that don't talk to each other.</p>
+  <div class="auto">
+    <div>
+      <h3>n8n</h3>
+      <p>Workflows that connect apps through webhooks and APIs. They move data between systems, trigger alerts, and run scheduled jobs with error handling so nothing fails silently.</p>
+    </div>
+    <div>
+      <h3>GoHighLevel</h3>
+      <p>CRM pipelines, lead capture, and automated SMS and email follow-ups. Workflows move contacts through each stage on their own, and integrations keep GHL in sync with the rest of the stack.</p>
+    </div>
+    <div>
+      <h3>Python</h3>
+      <p>Scripts and services for the jobs no-code tools can't handle: custom API integrations, data cleanup and imports, scheduled reports, and back-end endpoints that workflows can call.</p>
+    </div>
+  </div>
+</section>
+
 <section id="skills">
   <h2>What I work with</h2>
-  <p class="lede">Grouped by where it sits in the app.</p>
+  <p class="lede">The tools I use day to day, grouped by the job they do.</p>
   <div class="skills">
     <div><h3>Back end</h3><ul><li>Python</li><li>FastAPI</li><li>Flask</li><li>SQLAlchemy and Alembic</li><li>JWT auth and email OTP</li><li>WebSockets</li></ul></div>
     <div><h3>Data</h3><ul><li>MySQL</li><li>Redis</li><li>pandas</li><li>statsmodels (ARIMA)</li><li>Excel export</li></ul></div>
     <div><h3>Front end and mobile</h3><ul><li>HTML, CSS, JavaScript</li><li>Responsive layouts</li><li>Leaflet maps</li><li>Apache Cordova (Android)</li></ul></div>
+    <div><h3>Automation</h3><ul><li>n8n workflows</li><li>GoHighLevel CRM and workflows</li><li>Python scripting</li><li>Webhooks and REST APIs</li><li>Email and SMS follow-ups</li></ul></div>
     <div><h3>Shipping</h3><ul><li>Git and GitHub</li><li>Docker Compose</li><li>Render and gunicorn</li><li>Aiven managed MySQL</li><li>Cloudinary</li></ul></div>
   </div>
 </section>
@@ -283,7 +309,7 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
     <h2>About</h2>
     <div>
       <p>I'm Earl, a full-stack developer who builds practical software for small and growing businesses.</p>
-      <p>My projects usually start with the database and the API, then a front end simple enough to run on a cheap phone. I've built role-based dashboards for customers, sellers, riders and admins, real-time chat and location tracking, and a sales forecaster that tells a shop what to restock.</p>
+      <p>My projects usually start with the database and the API, then a front end simple enough to run on a cheap phone. I've built role-based dashboards for customers, sellers, riders and admins, real-time chat and location tracking, and a sales forecaster that tells a shop what to restock. Alongside that, I build automations in n8n, GoHighLevel and Python that take repetitive work off people's plates.</p>
       <!-- EDUCATION / EXPERIENCE: paste LinkedIn details here, e.g.
       <p><strong>BS Information Technology</strong>, School Name, 2022–2026</p>
       -->
