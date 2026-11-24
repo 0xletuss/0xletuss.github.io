@@ -81,8 +81,7 @@ h2{font-size:clamp(1.8rem,3.2vw,2.4rem);font-weight:800;letter-spacing:-.025em;l
 .lede{color:var(--muted);max-width:56ch;margin-bottom:36px}
 
 /* hero */
-.hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center}
-.hero h1{font-size:clamp(2.3rem,4.6vw,3.7rem);line-height:1.04;font-weight:800;letter-spacing:-.035em;font-variation-settings:"opsz" 96}
+.hero h1{font-size:min(clamp(2.4rem,5vw,4.3rem),9vh);line-height:1.04;font-weight:800;letter-spacing:-.035em;font-variation-settings:"opsz" 96}
 .hero .intro{margin-top:22px;max-width:44ch;font-size:1.12rem;color:var(--muted)}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;list-style:none}
 .badges li{padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:.88rem}
@@ -94,6 +93,41 @@ h2{font-size:clamp(1.8rem,3.2vw,2.4rem);font-weight:800;letter-spacing:-.025em;l
 .btn.ghost{border:1px solid var(--line)}
 .btn.ghost:hover{border-color:var(--muted)}
 .scroll-hint{display:none;margin-top:28px;color:var(--muted);font-size:.9rem}
+
+/* hero: deep-space panel with the astronaut, always dark so light text reads on the photo */
+.space,html.h.at-hero header,html.h.at-hero .rail{
+  --slate:#151c2b;--slate-2:#1d2639;--line:#2c3650;--ink:#e4e8f0;--muted:#a3adc2;--signal:#6fd6c8;
+  --signal-soft:rgba(111,214,200,.12);--on-signal:#0f1a1f;--signal-hover:#8be3d7;--chip:#232d43;--chip-ink:#b9c2d3;
+  color:var(--ink)
+}
+.hero{position:relative;overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(1px 1px at 12% 18%,#ffffff55,transparent),radial-gradient(1px 1px at 33% 72%,#ffffff40,transparent),
+    radial-gradient(1px 1px at 58% 12%,#ffffff50,transparent),radial-gradient(1.5px 1.5px at 84% 34%,#ffffff45,transparent),
+    radial-gradient(1px 1px at 22% 88%,#ffffff35,transparent),radial-gradient(1px 1px at 47% 44%,#ffffff30,transparent),
+    #05070d;
+  background-size:420px 420px,380px 380px,460px 460px,520px 520px,400px 400px,360px 360px,auto}
+.hero-art{position:absolute;z-index:-1;pointer-events:none;user-select:none;
+  inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;opacity:.42;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 85%,transparent);mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 85%,transparent)}
+.hero-grid{position:relative;max-width:640px}
+html.h .hero-art{inset:auto;width:auto;height:165vh;max-width:none;object-fit:fill;opacity:1;
+  top:calc(50% - 100.7vh);left:calc(68% - 45.3vh);
+  -webkit-mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%)}
+html.h.at-hero header{background:transparent}
+/* phones and short windows: the astronaut gets its own strip under the buttons instead of sitting behind text */
+html:not(.h) .hero{display:flex;flex-direction:column;padding-bottom:0}
+html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
+  width:calc(100% + 2 * var(--gutter));max-width:none;height:min(320px,62vw);margin:28px calc(-1 * var(--gutter)) 0;
+  object-fit:cover;object-position:50% 61%;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 22%,#000 78%,transparent)}
+.anim .hero-art{animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translate(0,0) rotate(0deg)}to{transform:translate(-14px,-18px) rotate(-1.2deg)}}
+
+/* the stack panel */
+.stack-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:center}
+.stack-copy .lede{margin-bottom:0}
+.anim #stack:not(.seen) .layer,.anim #stack:not(.seen) .packet{animation-play-state:paused}
 
 /* the stack: network at the bottom, automation on top */
 .stackviz{position:relative;list-style:none;padding-left:40px}
@@ -273,8 +307,8 @@ html.h .rail li:last-child a{align-items:flex-end}
 }
 
 @media (max-width:900px){
-  .hero-grid,.feature,.certs,.about{grid-template-columns:1fr}
-  .hero-grid{gap:48px}
+  .stack-grid,.feature,.certs,.about{grid-template-columns:1fr}
+  .stack-grid{gap:32px}
   .path{grid-template-columns:1fr;gap:28px}
   .path::before{left:6px;right:auto;top:0;bottom:0;width:2px;height:auto}
   .job{padding:0 0 0 32px}
@@ -357,6 +391,7 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
   <div class="rail-packet" aria-hidden="true"></div>
   <ol>
     <li data-for="top"><a href="#top">Start</a></li>
+    <li data-for="stack"><a href="#stack">Stack</a></li>
     <li data-for="experience"><a href="#experience">Experience</a></li>
     <li data-for="certifications"><a href="#certifications">Certifications</a></li>
     <li data-for="work"><a href="#work">Projects</a></li>
@@ -369,7 +404,8 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 <div class="viewport">
 <main class="track">
 
-<section class="panel hero" id="top">
+<section class="panel hero space" id="top">
+  <img class="hero-art" src="img/hero.jpg" alt="" aria-hidden="true">
   <div class="hero-grid">
     <div>
       <h1>From the network backbone to the code that runs on it.</h1>
@@ -385,7 +421,15 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
       </div>
       <p class="scroll-hint">Scroll to move through the stack sideways.</p>
     </div>
+  </div>
+</section>
 
+<section class="panel" id="stack">
+  <div class="stack-grid">
+    <div class="stack-copy">
+      <h2>Every layer, from the wire up</h2>
+      <p class="lede">Most developers start at the code. I started at the cable, so I can follow a problem from a misconfigured switch all the way up to a broken automation, and fix it wherever it lives.</p>
+    </div>
     <div>
       <ol class="stackviz" reversed aria-label="Skills by layer, from network up to automation">
         <span class="packet" aria-hidden="true"></span>
@@ -396,7 +440,6 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
         <li class="layer" style="--i:1"><b>Servers</b><span>Linux VPS, server setup, Docker, GitHub Actions CI</span></li>
         <li class="layer" style="--i:0"><b>Network</b><span>Cisco routing and switching, network security, Fortinet</span></li>
       </ol>
-      <p class="stack-cap">Every layer I work in, from the wire up.</p>
     </div>
   </div>
 </section>
@@ -612,6 +655,7 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 (function(){
   if(!document.documentElement.classList.contains("anim"))return;
   var groups={
+    "#stack":["h2",".lede",".stackviz"],
     "#experience":["h2",".lede",".job"],
     "#certifications":["h2",".lede",".cert-main",".cert-list li"],
     "#work":["h2",".lede",".feature>div:first-child",".gallery"],
@@ -705,6 +749,7 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
       packet.style.top=p*100+'%'; packet.style.left='';
     }
     if(p>.995)idx=targets.length-1;
+    root.classList.toggle("at-hero",horiz&&(horiz?Math.min(scrollY,maxX):0)<innerWidth*.5);
     items.forEach(function(li,i){li.classList.toggle('on',i===idx);li.classList.toggle('done',i<idx)});
   }
 
