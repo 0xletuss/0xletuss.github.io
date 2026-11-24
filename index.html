@@ -130,21 +130,25 @@ html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
 .anim #stack:not(.seen) .layer,.anim #stack:not(.seen) .packet{animation-play-state:paused}
 
 /* the stack: network at the bottom, automation on top */
-.stackviz{position:relative;list-style:none;padding-left:40px}
-.stackviz::before{content:"";position:absolute;left:11px;top:var(--ln-top,22px);bottom:var(--ln-bottom,22px);width:2px;background:var(--line)}
-.layer{position:relative;display:grid;grid-template-columns:112px 1fr;gap:16px;align-items:baseline;padding:12px 18px;margin-bottom:8px;background:var(--slate-2);border:1px solid var(--line);border-radius:10px;
+.stackviz{position:relative;list-style:none;padding-left:40px;--axis:12px}
+.stackviz{--lgap:8px}
+.layer{position:relative;display:grid;grid-template-columns:112px 1fr;gap:16px;align-items:baseline;padding:12px 18px;margin-bottom:var(--lgap);background:var(--slate-2);border:1px solid var(--line);border-radius:10px;
   animation:lit .5s ease-out both;animation-delay:calc(.25s + var(--i)*.32s)}
 .layer:last-child{margin-bottom:0}
-.layer::before{content:"";position:absolute;left:-34px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--slate);border:2px solid var(--signal)}
+.layer::before{content:"";position:absolute;left:calc(var(--axis) - 41px);top:50%;width:12px;height:12px;transform:translate(-50%,-50%);z-index:1;border-radius:50%;background:var(--slate);border:2px solid var(--signal)}
+.layer::after{content:"";position:absolute;z-index:0;left:calc(var(--axis) - 41px);transform:translateX(-50%);width:2px;
+  top:calc(-1px - var(--lgap) / 2);bottom:calc(-1px - var(--lgap) / 2);background:var(--line)}
+.layer:first-of-type::after{top:50%}
+.layer:last-of-type::after{bottom:50%}
 .layer b{font-weight:600;font-size:.98rem}
 .layer span{color:var(--muted);font-size:.9rem;line-height:1.45}
-.packet{position:absolute;left:7px;width:10px;height:10px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);top:var(--pk-start,calc(100% - 37px));animation:rise 2.1s cubic-bezier(.5,0,.3,1) .25s both}
+.packet{position:absolute;left:var(--axis);margin-left:-5px;width:10px;height:10px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);top:var(--pk-start,calc(100% - 37px));animation:rise 2.1s cubic-bezier(.5,0,.3,1) .25s both}
 @keyframes rise{from{top:var(--pk-start,calc(100% - 37px))}to{top:var(--pk-end,17px)}}
 @keyframes lit{from{opacity:.35}to{opacity:1}}
 .stack-cap{margin:12px 0 0 40px;font-size:.85rem;color:var(--muted)}
 
 /* experience: a left-to-right path, oldest first */
-.path{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative}
+.path{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);--pgap:28px;gap:var(--pgap);position:relative}
 .path::before{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:var(--line)}
 .job{position:relative;padding-top:30px}
 .job::before{content:"";position:absolute;left:0;top:0;width:14px;height:14px;border-radius:50%;background:var(--slate);border:2px solid var(--signal)}
@@ -154,6 +158,14 @@ html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
 .job h3{font-size:1.15rem;font-weight:600;letter-spacing:-.01em;line-height:1.3;margin-top:6px}
 .job .org{opacity:.85;font-size:.95rem;margin-bottom:8px}
 .job p{color:var(--muted);font-size:.93rem}
+/* the open stop: dashed road ahead, a pulsing empty dot, and a way to claim it */
+.job.next::before{background:var(--slate);border-style:dashed}
+.job.next::after{content:"";position:absolute;top:6px;left:calc(-1 * var(--pgap));right:0;height:2px;
+  background:repeating-linear-gradient(90deg,var(--signal) 0 6px,transparent 6px 12px),var(--slate);opacity:.8}
+.job.next h3{color:var(--signal)}
+.next-cta{margin-top:14px;padding:9px 16px;font-size:.92rem}
+@keyframes ping{0%{box-shadow:0 0 0 0 var(--signal-soft),0 0 0 0 rgba(111,214,200,.45)}100%{box-shadow:0 0 0 10px transparent,0 0 0 18px transparent}}
+.anim .seen .job.next::before{animation:ping 2s ease-out 1.6s infinite}
 
 /* certifications */
 .certs{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;max-width:980px}
@@ -254,7 +266,7 @@ html.h{--hdr:80px;--railz:64px;--gap:clamp(20px,4.5vh,56px);--avail:calc(100vh -
 html.h .lede{margin-bottom:24px}
 html.h .panel.wide{width:auto;min-width:100vw}
 html.h #projects-more .cards{grid-template-columns:repeat(2,360px)}
-html.h #experience .path{grid-template-columns:repeat(4,290px);gap:40px}
+html.h #experience .path{grid-template-columns:repeat(5,290px);--pgap:40px}
 html.h .scroll-hint{display:block}
 html.h .rail{left:6vw;right:6vw;top:auto;bottom:26px;width:auto;height:36px;pointer-events:auto}
 html.h .rail-track{left:0;right:0;top:6px;bottom:auto;width:auto;height:2px}
@@ -289,8 +301,9 @@ html.h .rail li:last-child a{align-items:flex-end}
   html.h .badges{margin-top:16px}
   html.h .cta{margin-top:20px}
   html.h .scroll-hint{margin-top:16px}
-  html.h .layer{padding:9px 16px;margin-bottom:6px}
-  html.h #experience .path{grid-template-columns:repeat(4,330px);gap:32px}
+  html.h .layer{padding:9px 16px}
+  html.h .stackviz{--lgap:6px}
+  html.h #experience .path{grid-template-columns:repeat(5,330px);--pgap:32px}
   html.h .job .stack li{font-size:.7rem;padding:2px 7px}
   html.h .job{padding-top:26px}
 }
@@ -312,6 +325,7 @@ html.h .rail li:last-child a{align-items:flex-end}
   .path{grid-template-columns:1fr;gap:28px}
   .path::before{left:6px;right:auto;top:0;bottom:0;width:2px;height:auto}
   .job{padding:0 0 0 32px}
+  .job.next::after{display:none}
   .cards{grid-template-columns:1fr 1fr}
   .gallery{width:100%}
   .auto{grid-template-columns:1fr}
@@ -472,6 +486,13 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
       <h3>Cisco Instructor</h3>
       <div class="org">Misamis University, Oroquieta</div>
       <p>Teach Cisco Networking Academy courses to IT students, covering how networks are built, secured and automated.</p>
+    </li>
+    <li class="job next">
+      <div class="when">2027 and beyond, <em>open</em></div>
+      <h3>Your team?</h3>
+      <div class="org">This stop is still open</div>
+      <p>Hire someone who can follow a problem through every layer: the network, the server, the API, the app and the automation on top. Tell me what is broken, slow or still done by hand, and I will find the layer where it lives and fix it.</p>
+      <a class="btn primary next-cta" href="#contact">Make it your company</a>
     </li>
   </ol>
 </section>
