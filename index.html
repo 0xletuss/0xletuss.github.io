@@ -113,8 +113,16 @@ h2{font-size:clamp(1.8rem,3.2vw,2.4rem);font-weight:800;letter-spacing:-.025em;l
 .vfd-legend span::before{content:"";display:inline-block;width:14px;border-top:2px solid #b8c6c6;vertical-align:middle;margin-right:6px}
 .vfd-legend span.f::before{border-top:2px dashed var(--signal)}
 
+/* phone screenshots */
+.showcase{grid-template-columns:1fr auto;align-items:center}
+.phones{display:flex;gap:20px}
+.phone{width:200px}
+.phone img{display:block;width:100%;aspect-ratio:390/844;object-fit:cover;object-position:top;border-radius:22px;border:6px solid #0d1418;box-shadow:0 0 0 1px var(--line)}
+.phone figcaption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:10px}
+html.h .phone{width:min(200px,calc((100vh - 300px) * 390 / 844))}
+
 /* other projects */
-.cards{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.cards{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .card{display:flex;flex-direction:column;background:var(--slate-2);border:1px solid var(--line);border-radius:12px;padding:24px}
 .card h3{font-size:1.25rem;font-weight:600;letter-spacing:-.01em}
 .card .when{color:var(--muted);font-size:.85rem;margin-bottom:10px}
@@ -161,7 +169,7 @@ html.h .track{display:flex;height:100vh;will-change:transform}
 html.h .panel{flex:0 0 auto;width:100vw;height:100vh;max-width:none;margin:0;padding:92px 6vw 96px;border-top:0;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
 html.h .panel.hero{padding-top:92px}
 html.h .panel.wide{width:auto;min-width:100vw}
-html.h #projects-more .cards{grid-template-columns:repeat(4,300px)}
+html.h #projects-more .cards{grid-template-columns:repeat(3,320px)}
 html.h #experience .path{grid-template-columns:repeat(4,290px);gap:40px}
 html.h .scroll-hint{display:block}
 html.h .rail{left:6vw;right:6vw;top:auto;bottom:26px;width:auto;height:36px;pointer-events:auto}
@@ -195,6 +203,8 @@ html.h .rail a:hover{color:var(--ink)}
   .cards{grid-template-columns:1fr}
   .feature,.cert-main{padding:22px}
   .layer{grid-template-columns:1fr;gap:2px}
+  .phones{gap:12px}
+  .phone{width:calc(50% - 6px)}
 }
 @media (prefers-reduced-motion:reduce){
   .layer,.packet{animation:none}
@@ -351,14 +361,34 @@ html.h .rail a:hover{color:var(--ink)}
   </article>
 </section>
 
+<section class="panel" id="pasugo" aria-label="Pasugo">
+  <article class="feature showcase">
+    <div>
+      <h3>Pasugo</h3>
+      <div class="tagline">Android app and API, 2026</div>
+      <p>A bill payment and errand delivery app. Customers post a request, see verified riders nearby on a live map, and pick one. The rider pays the bill or does the errand, shares their location as they go, and both sides chat in real time.</p>
+      <ul class="points">
+        <li>Customer, rider and admin roles with rider verification</li>
+        <li>Live map of nearby riders and order tracking</li>
+        <li>Real-time chat over WebSockets, ratings and complaints</li>
+      </ul>
+      <ul class="stack"><li>FastAPI</li><li>SQLAlchemy</li><li>MySQL</li><li>Redis</li><li>WebSockets</li><li>Cordova</li><li>Leaflet</li><li>Cloudinary</li></ul>
+      <div class="links" style="margin-top:16px">
+        <a href="https://github.com/0xletuss/pasugoo">Android app code</a>
+        <a href="https://github.com/0xletuss/pasugo">API code</a>
+      </div>
+    </div>
+    <div class="phones">
+      <figure class="phone"><img src="img/pasugo-home.png" alt="Pasugo home screen: a map of Oroquieta City showing four riders nearby with their distances" loading="lazy"><figcaption>Riders nearby</figcaption></figure>
+      <figure class="phone"><img src="img/pasugo-history.png" alt="Pasugo order history with bills, groceries and pharmacy requests and their totals" loading="lazy"><figcaption>Order history</figcaption></figure>
+    </div>
+  </article>
+</section>
+
 <section class="panel wide" id="projects-more" aria-label="More projects">
   <h2>More projects</h2>
-  <p class="lede">Most pair a Python API and MySQL with a front end that runs in the browser or on Android.</p>
-  <ul class="cards">
-    <li class="card">
-      <h3>Pasugo</h3><div class="when">2026</div>
-      <p>Bill payment and errand delivery. <strong>Customers</strong> post a request, verified <strong>riders</strong> accept it and share live location on a map, and both sides chat in real time.</p>
-      <ul class="stack"><li>FastAPI</li><li>MySQL</li><li>Redis</li><li>WebSockets</li><li>Cordova</li><li>Leaflet</li></ul>
+  <p class="lede">More Python APIs with MySQL behind them, and front ends that run in the browser or on Android.</p>
+  <ul class="cards"><li>MySQL</li><li>Redis</li><li>WebSockets</li><li>Cordova</li><li>Leaflet</li></ul>
       <div class="links"><a href="https://github.com/0xletuss/pasugoo">Android app</a><a href="https://github.com/0xletuss/pasugo">API</a></div>
     </li>
     <li class="card">
