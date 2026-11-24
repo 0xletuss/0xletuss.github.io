@@ -121,7 +121,13 @@ html.h.at-hero header{background:transparent}
   --signal-soft:rgba(29,22,5,.12);--on-signal:#f6d36b;--signal-hover:#3a2c08;--chip:rgba(29,22,5,.1);--chip-ink:#1d1605
 }
 :root[data-theme="light"] .hero{background:radial-gradient(ellipse 60% 70% at 72% 52%,#f2c94c 0%,#d9a521 38%,#b07f12 78%,#8f6409 100%)}
-:root[data-theme="light"] .hero-art{mix-blend-mode:screen;filter:grayscale(.3) brightness(.78) contrast(1.75)}
+/* light mode swaps the space photo for the cut-out astronaut, in its real colours, at the same spot */
+.hero-cut{display:none;position:absolute;z-index:-1;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 34px rgba(70,45,0,.38))}
+:root[data-theme="light"] .hero-art{display:none}
+:root[data-theme="light"] .hero-cut{display:block}
+html.h .hero-cut{width:65.75vh;height:auto;left:calc(68% - 31.76vh);top:calc(50% - 19.81vh)}
+html:not(.h) .hero-cut{position:relative;order:2;z-index:0;align-self:center;width:min(100%,460px);height:auto;margin:28px 0 36px}
+.anim .hero-cut{animation:drift 14s ease-in-out infinite alternate}
 :root[data-theme="light"] .hero .btn.ghost{border-color:rgba(29,22,5,.45)}
 /* phones and short windows: the astronaut gets its own strip under the buttons instead of sitting behind text */
 html:not(.h) .hero{display:flex;flex-direction:column;padding-bottom:0}
@@ -440,6 +446,7 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 
 <section class="panel hero space" id="top">
   <img class="hero-art" src="img/hero.jpg" alt="" aria-hidden="true">
+  <img class="hero-cut" src="img/hero-cutout.png" alt="" aria-hidden="true">
   <div class="hero-grid">
     <div>
       <h1>From the network backbone to the code that runs on it.</h1>
