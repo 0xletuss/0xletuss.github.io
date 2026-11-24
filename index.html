@@ -147,14 +147,14 @@ h2{font-size:clamp(1.8rem,3.2vw,2.4rem);font-weight:800;letter-spacing:-.025em;l
 .phone{width:200px}
 .phone img{display:block;width:100%;aspect-ratio:390/844;object-fit:cover;object-position:top;border-radius:22px;border:6px solid #0d1418;box-shadow:0 0 0 1px var(--line)}
 .phone figcaption{text-align:center;color:var(--muted);font-size:.85rem;margin-top:10px}
-html.h .phone{width:min(200px,calc((100vh - 300px) * 390 / 844))}
+html.h .phone{width:min(210px,calc((var(--avail) - var(--cardpad) - 34px) * 390 / 844))}
 
 /* app screenshots */
 .gallery{display:grid;gap:12px;width:min(560px,100%)}
 .gallery img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff}
 .gallery .thumbs{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
-html.h #work .gallery{width:min(640px,calc((100vh - 402px) / .818))}
-html.h #skinshelf .gallery{width:min(660px,calc((100vh - 350px) / .62))}
+html.h #work .gallery{width:min(640px,calc((var(--avail) - var(--headh) - var(--cardpad) - 12px) / .818))}
+html.h #skinshelf .gallery{width:min(660px,calc((var(--avail) - var(--cardpad) - 58px) / .62))}
 
 .gallery.grid4{grid-template-columns:1fr 1fr;gap:14px 12px}
 .gallery.grid4 figure{margin:0}
@@ -210,11 +210,14 @@ html.h #skinshelf .gallery{width:min(660px,calc((100vh - 350px) / .62))}
 html.h{scrollbar-width:none}
 html.h::-webkit-scrollbar{display:none}
 html.h body{overflow-x:hidden}
-html.h header{position:fixed;top:0;left:0;right:0;max-width:none;padding:22px 5vw;z-index:20;background:linear-gradient(var(--slate) 60%,transparent)}
+html.h header{position:fixed;top:0;left:0;right:0;max-width:none;padding:22px 6vw;z-index:20;background:linear-gradient(var(--slate) 60%,transparent)}
 html.h .viewport{position:fixed;inset:0;overflow:hidden}
 html.h .track{display:flex;height:100vh;will-change:transform}
-html.h .panel{flex:0 0 auto;width:100vw;height:100vh;max-width:none;margin:0;padding:92px 6vw 96px;border-top:0;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
-html.h .panel.hero{padding-top:92px}
+html.h .panel{flex:0 0 auto;width:100vw;height:100vh;max-width:none;margin:0;padding:calc(var(--hdr) + var(--gap)) 6vw calc(var(--railz) + var(--gap));border-top:0;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+html.h .panel.hero{padding-top:calc(var(--hdr) + var(--gap))}
+/* layout budget for horizontal mode: header zone, rail zone, and the gap kept clear around content */
+html.h{--hdr:80px;--railz:64px;--gap:clamp(20px,4.5vh,56px);--avail:calc(100vh - var(--hdr) - var(--railz) - 2 * var(--gap));--headh:128px;--cardpad:72px}
+html.h .lede{margin-bottom:24px}
 html.h .panel.wide{width:auto;min-width:100vw}
 html.h #projects-more .cards{grid-template-columns:repeat(2,360px)}
 html.h #experience .path{grid-template-columns:repeat(4,290px);gap:40px}
@@ -231,6 +234,43 @@ html.h .rail li.done a::before{border-color:var(--signal)}
 html.h .rail li.on a::before{border-color:var(--signal);background:var(--signal)}
 html.h .rail li.on a{color:var(--ink)}
 html.h .rail a:hover{color:var(--ink)}
+/* labels sit centred under their stop; the first and last stay inside the content edges */
+html.h .rail li{transform:translateX(-50%)}
+html.h .rail a{align-items:center}
+html.h .rail li:first-child{transform:translateX(-7px)}
+html.h .rail li:first-child a{align-items:flex-start}
+html.h .rail li:last-child{transform:translateX(calc(-100% + 7px))}
+html.h .rail li:last-child a{align-items:flex-end}
+
+@media (max-height:780px){
+  html.h{--headh:112px;--cardpad:56px}
+  html.h h2{font-size:clamp(1.6rem,2.6vw,2rem)}
+  html.h .lede{margin-bottom:18px}
+  html.h .feature{padding:28px}
+  html.h .feature h3{font-size:1.6rem}
+  html.h .feature p,html.h .feature ul.points li,html.h .job p,html.h .card p,html.h .auto p{font-size:.92rem;line-height:1.5}
+  html.h .feature ul.points{margin-top:10px}
+  html.h .hero h1{font-size:min(clamp(2.2rem,4.4vw,3.6rem),7.4vh)}
+  html.h .hero .intro{margin-top:16px;font-size:1.02rem}
+  html.h .badges{margin-top:16px}
+  html.h .cta{margin-top:20px}
+  html.h .scroll-hint{margin-top:16px}
+  html.h .layer{padding:9px 16px;margin-bottom:6px}
+  html.h #experience .path{grid-template-columns:repeat(4,330px);gap:32px}
+  html.h .job .stack li{font-size:.7rem;padding:2px 7px}
+  html.h .job{padding-top:26px}
+}
+/* big screens: scale type up so panels are not mostly empty */
+@media (min-width:1800px) and (min-height:1000px){
+  html.h{font-size:112.5%}
+  html.h #work .gallery{width:min(760px,calc((var(--avail) - var(--headh) - var(--cardpad) - 12px) / .818))}
+  html.h #skinshelf .gallery{width:min(780px,calc((var(--avail) - var(--cardpad) - 58px) / .62))}
+  html.h .phone{width:min(250px,calc((var(--avail) - var(--cardpad) - 34px) * 390 / 844))}
+}
+@media (max-height:680px){
+  html.h .scroll-hint,html.h .stack-cap{display:none}
+  html.h .hero .intro{font-size:.98rem}
+}
 
 @media (max-width:900px){
   .hero-grid,.feature,.certs,.about{grid-template-columns:1fr}
@@ -253,7 +293,7 @@ html.h .rail a:hover{color:var(--ink)}
   .brand .mid{display:none}
   header nav{gap:12px}
   .theme-toggle{width:32px;height:32px;margin-left:0;flex:none}
-  .panel{padding-top:64px;padding-bottom:64px}
+  .panel{padding-top:52px;padding-bottom:52px}
   .cards{grid-template-columns:1fr}
   .feature,.cert-main{padding:22px}
   .layer{grid-template-columns:1fr;gap:2px}
