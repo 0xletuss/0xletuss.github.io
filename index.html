@@ -41,7 +41,7 @@ nav a:hover{color:var(--ink)}
 
 /* hero */
 .hero{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;padding:56px 0 96px}
-.hero h1{font-size:clamp(2.6rem,6.2vw,4.9rem);line-height:.98;font-weight:800;letter-spacing:-.035em;font-variation-settings:"opsz" 96}
+.hero h1{font-size:clamp(2.3rem,5vw,3.9rem);line-height:1.05;font-weight:800;letter-spacing:-.035em;font-variation-settings:"opsz" 96}
 .hero p{margin-top:28px;max-width:34ch;font-size:1.2rem;color:var(--muted)}
 .hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
 .btn{display:inline-block;padding:12px 20px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.98rem}
@@ -50,21 +50,20 @@ nav a:hover{color:var(--ink)}
 .btn.ghost{border:1px solid var(--line)}
 .btn.ghost:hover{border-color:var(--muted)}
 
-/* receipt */
-.receipt-slot{position:relative;justify-self:center;width:100%;max-width:340px}
-.receipt-slot::before{content:"";display:block;height:14px;margin:0 -14px;background:var(--slate-2);border-radius:7px;border:1px solid var(--line)}
-.receipt{position:relative;margin:-7px 6px 0;background:var(--paper);color:var(--paper-ink);font:400 .82rem/1.55 var(--mono);padding:26px 22px 30px;
-  --tooth:8px;
-  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - var(--tooth)) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/calc(var(--tooth)*2) var(--tooth) repeat-x;
-          mask:linear-gradient(#000 0 0) top/100% calc(100% - var(--tooth)) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/calc(var(--tooth)*2) var(--tooth) repeat-x;
-  transform-origin:top;animation:print 1.6s steps(18,end) .3s both}
-@keyframes print{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
-.receipt .c{text-align:center}
-.receipt .big{font-weight:500;font-size:.95rem;letter-spacing:.04em}
-.receipt hr{border:0;border-top:1px dashed #9a978f;margin:12px 0}
-.receipt .row{display:flex;justify-content:space-between;gap:12px}
-.receipt .tot{font-weight:500;font-size:.92rem}
-.barcode{height:44px;margin:16px 8px 6px;background:repeating-linear-gradient(90deg,var(--paper-ink) 0 2px,transparent 2px 4px,var(--paper-ink) 4px 5px,transparent 5px 8px,var(--paper-ink) 8px 11px,transparent 11px 12px,var(--paper-ink) 12px 13px,transparent 13px 17px)}
+/* profile card */
+.profile{justify-self:end;width:100%;max-width:380px;background:var(--slate-2);border:1px solid var(--line);border-radius:14px;padding:28px}
+.profile-head{display:flex;align-items:center;gap:16px}
+.profile-head img{width:72px;height:72px;border-radius:50%;border:2px solid var(--line)}
+.profile-head strong{display:block;font-size:1.15rem;font-weight:600;line-height:1.25}
+.profile-head span{display:block;color:var(--muted);font-size:.95rem}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:6px 12px;border-radius:999px;background:rgba(111,214,200,.1);color:var(--vfd);font-size:.88rem;font-weight:600}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--vfd)}
+.facts{list-style:none;margin-top:22px;border-top:1px solid var(--line)}
+.facts li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.facts li span:first-child{color:var(--muted)}
+.facts li span:last-child{text-align:right}
+.profile .cta{margin-top:22px}
+.profile .btn{flex:1;text-align:center}
 
 /* sections */
 section{padding:88px 0;border-top:1px solid var(--line)}
@@ -135,7 +134,6 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
   .feature{padding:22px}
 }
 @media (prefers-reduced-motion:reduce){
-  .receipt{animation:none}
   html{scroll-behavior:auto}
 }
 </style>
@@ -144,7 +142,7 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
 <div class="wrap">
 
 <header>
-  <a class="brand" href="#top"><img src="https://avatars.githubusercontent.com/u/215154076?v=4&s=80" alt="">Earl Banawa</a>
+  <a class="brand" href="#top">Earl Lawrence Banawa</a>
   <nav>
     <a href="#work">Work</a>
     <a class="hide-sm" href="#skills">Skills</a>
@@ -156,38 +154,31 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
 <main id="top">
 <div class="hero">
   <div>
-    <h1>I build the systems behind the counter.</h1>
-    <p>Full-stack developer from the Philippines. Point-of-sale, checkout, delivery and ordering apps, with Python APIs underneath and fast, plain JavaScript on top.</p>
+    <h1>Full-stack developer building software for real businesses.</h1>
+    <p>I design and build point-of-sale, e-commerce and delivery systems, from the database and Python API to the web and Android front end.</p>
     <div class="cta">
-      <a class="btn primary" href="#work">See my projects</a>
-      <a class="btn ghost" href="https://github.com/0xletuss">GitHub</a>
+      <a class="btn primary" href="#work">View projects</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
     </div>
   </div>
 
-  <div class="receipt-slot" aria-label="Stack summary printed as a receipt">
-    <div class="receipt">
-      <div class="c big">EARL L. BANAWA</div>
-      <div class="c">Full-stack developer, PH</div>
-      <div class="c">github.com/0xletuss</div>
-      <hr>
-      <div class="row"><span>QTY ITEM</span><span>PROJECTS</span></div>
-      <hr>
-      <div class="row"><span>Python + FastAPI</span><span>3</span></div>
-      <div class="row"><span>Python + Flask</span><span>3</span></div>
-      <div class="row"><span>MySQL</span><span>6</span></div>
-      <div class="row"><span>Vanilla JS front ends</span><span>4</span></div>
-      <div class="row"><span>Cloudinary uploads</span><span>6</span></div>
-      <div class="row"><span>Cordova (Android)</span><span>2</span></div>
-      <div class="row"><span>ARIMA forecasting</span><span>1</span></div>
-      <hr>
-      <div class="row tot"><span>SHIPPED APPS</span><span>6</span></div>
-      <div class="row"><span>Commits, Landahan POS</span><span>182</span></div>
-      <hr>
-      <div class="c">Thank you, come again</div>
-      <div class="barcode" aria-hidden="true"></div>
-      <div class="c">0x 1e7055</div>
+  <aside class="profile" aria-label="Profile summary">
+    <div class="profile-head">
+      <img src="https://avatars.githubusercontent.com/u/215154076?v=4&s=144" alt="Earl Lawrence Banawa">
+      <div><strong>Earl Lawrence Banawa</strong><span>Full-Stack Developer</span></div>
     </div>
-  </div>
+    <div class="status">Open to opportunities</div>
+    <ul class="facts">
+      <li><span>Location</span><span>Philippines</span></li>
+      <li><span>Focus</span><span>Back-end APIs, web apps</span></li>
+      <li><span>Core stack</span><span>Python, FastAPI, Flask, MySQL</span></li>
+      <li><span>Apps built</span><span>6</span></li>
+    </ul>
+    <div class="cta">
+      <a class="btn ghost" href="https://github.com/0xletuss">GitHub</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/earl-lawrence-banawa-7977671a0">LinkedIn</a>
+    </div>
+  </aside>
 </div>
 
 <section id="work">
@@ -291,7 +282,7 @@ footer small{display:block;margin-top:48px;color:var(--muted)}
   <div class="about">
     <h2>About</h2>
     <div>
-      <p>I'm Earl. I like building software for small businesses: the register, the stockroom, the rider on a motorbike.</p>
+      <p>I'm Earl, a full-stack developer who builds practical software for small and growing businesses.</p>
       <p>My projects usually start with the database and the API, then a front end simple enough to run on a cheap phone. I've built role-based dashboards for customers, sellers, riders and admins, real-time chat and location tracking, and a sales forecaster that tells a shop what to restock.</p>
       <!-- EDUCATION / EXPERIENCE: paste LinkedIn details here, e.g.
       <p><strong>BS Information Technology</strong>, School Name, 2022–2026</p>
