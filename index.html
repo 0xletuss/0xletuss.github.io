@@ -16,6 +16,8 @@
   (function(){var t=null;try{t=localStorage.getItem("theme")}catch(e){}
     if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";
     document.documentElement.setAttribute("data-theme",t)})();
+  // Motion: only when the visitor has not asked for reduced motion. Without this class nothing is hidden.
+  if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("anim");
   // Horizontal mode on roomy screens; phones and short windows keep normal vertical scrolling.
   (function(){var q=matchMedia('(min-width:1024px) and (min-height:600px)');function s(){document.documentElement.classList.toggle('h',q.matches)}s();q.addEventListener('change',s)})();
 </script>
@@ -258,6 +260,35 @@ html.h .rail a:hover{color:var(--ink)}
   .phones{gap:12px}
   .phone{width:calc(50% - 6px)}
 }
+/* ===== motion ===== */
+/* panel content arrives in the direction of travel: sideways in horizontal mode, upward otherwise */
+:root{--rx:0px;--ry:26px}
+html.h{--rx:56px;--ry:0px}
+.anim [data-r]{opacity:0;transform:translate(var(--rx),var(--ry))}
+.anim .seen [data-r]{opacity:1;transform:none;transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0) * 65ms)}
+/* experience: the line draws, then each stop lights up */
+.anim .path::before{transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.6,0,.2,1) .15s}
+.anim .seen .path::before{transform:none}
+.anim .job::before{transform:scale(0);transition:transform .45s cubic-bezier(.3,1.7,.5,1);transition-delay:calc(.25s + var(--d,0) * .2s)}
+.anim .seen .job::before{transform:none}
+/* hero copy rises in on load, next to the packet climbing the stack */
+@keyframes rise-in{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.anim .hero-grid>div:first-child>*{animation:rise-in .8s cubic-bezier(.2,.7,.2,1) both}
+.anim .hero-grid>div:first-child>:nth-child(2){animation-delay:.12s}
+.anim .hero-grid>div:first-child>:nth-child(3){animation-delay:.24s}
+.anim .hero-grid>div:first-child>:nth-child(4){animation-delay:.36s}
+.anim .hero-grid>div:first-child>:nth-child(5){animation-delay:.5s}
+/* small lift on things you can point at */
+.anim .gallery img,.anim .phone img,.anim .card,.anim .auto>div,.anim .cert-main,.anim .btn{transition:transform .25s ease,box-shadow .25s ease,background-color .2s,border-color .2s}
+.anim .gallery img:hover,.anim .phone img:hover{transform:translateY(-4px);box-shadow:0 14px 30px -12px rgba(0,0,0,.45)}
+.anim .card:hover,.anim .auto>div:hover,.anim .cert-main:hover{transform:translateY(-4px);border-color:var(--signal)}
+.anim .btn:hover{transform:translateY(-2px)}
+/* theme switch fades instead of snapping */
+html.theming,html.theming *,html.theming *::before,html.theming *::after{transition:background-color .45s ease,color .45s ease,border-color .45s ease,fill .45s ease!important}
+@media (max-width:900px){
+  .anim .path::before{transform:scaleY(0);transform-origin:top}
+}
+
 @media (prefers-reduced-motion:reduce){
   .layer,.packet{animation:none}
   .packet{bottom:calc(100% - 42px)}
@@ -533,9 +564,56 @@ html.h .rail a:hover{color:var(--ink)}
   label();
   btn.addEventListener("click",function(){
     var t=root.getAttribute("data-theme")==="light"?"dark":"light";
+    root.classList.add("theming");setTimeout(function(){root.classList.remove("theming")},500);
     root.setAttribute("data-theme",t);label();
     try{localStorage.setItem("theme",t)}catch(e){}
   });
+})();
+(function(){
+  if(!document.documentElement.classList.contains("anim"))return;
+  var groups={
+    "#experience":["h2",".lede",".job"],
+    "#certifications":["h2",".lede",".cert-main",".cert-list li"],
+    "#work":["h2",".lede",".feature>div:first-child",".gallery"],
+    "#pasugo":[".feature>div:first-child",".phone"],
+    "#skinshelf":[".feature>div:first-child",".gallery figure"],
+    "#projects-more":["h2",".lede",".card"],
+    "#automation":["h2",".lede",".auto>div"],
+    "#about":[".about>img",".about>div"],
+    "#contact":["h2",".lede",".cta","small"]
+  };
+  var panels=[];
+  Object.keys(groups).forEach(function(sel){
+    var p=document.querySelector(sel); if(!p)return; panels.push(p);
+    var i=0;
+    groups[sel].forEach(function(q){p.querySelectorAll(q).forEach(function(el){el.setAttribute("data-r","");el.style.setProperty("--d",i++)})});
+    p.querySelectorAll(".job").forEach(function(el,j){el.style.setProperty("--d",j+2)});
+  });
+  // Reveal a panel once a good part of it is on screen, or once it has been scrolled past,
+  // so nothing can stay hidden however fast someone scrolls or jumps with a link.
+  function reveal(p){
+    p.classList.add("seen");
+    setTimeout(function(){p.querySelectorAll("[data-r]").forEach(function(el){el.removeAttribute("data-r")})},2400);
+  }
+  function check(){
+    var horiz=document.documentElement.classList.contains("h"), W=innerWidth, H=innerHeight;
+    panels=panels.filter(function(p){
+      var r=p.getBoundingClientRect();
+      var visW=Math.max(0,Math.min(r.right,W)-Math.max(r.left,0)), visH=Math.max(0,Math.min(r.bottom,H)-Math.max(r.top,0));
+      var passed=horiz?r.left<W*.5:r.top<H*.6;
+      if(visW*visH>=W*H*.3||passed){reveal(p);return false}
+      return true;
+    });
+  }
+  var queued=false, trail;
+  function schedule(){
+    if(!queued){queued=true;requestAnimationFrame(function(){queued=false;check()})}
+    clearTimeout(trail);trail=setTimeout(check,180);
+  }
+  addEventListener("scroll",schedule,{passive:true});
+  addEventListener("resize",schedule);
+  addEventListener("load",schedule);
+  schedule();
 })();
 (function(){
   var lb=document.getElementById("lightbox"), lbImg=lb.querySelector("img");
