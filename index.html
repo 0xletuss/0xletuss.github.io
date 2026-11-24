@@ -120,7 +120,12 @@ html.h .phone{width:min(200px,calc((100vh - 300px) * 390 / 844))}
 .gallery img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:#fff}
 .gallery .thumbs{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
 html.h #work .gallery{width:min(640px,calc((100vh - 402px) / .818))}
-html.h #skinshelf .gallery{width:min(600px,calc(100vh - 272px))}
+html.h #skinshelf .gallery{width:min(660px,calc((100vh - 350px) / .62))}
+
+.gallery.grid4{grid-template-columns:1fr 1fr;gap:14px 12px}
+.gallery.grid4 figure{margin:0}
+.gallery.grid4 img{aspect-ratio:16/10;object-fit:cover;object-position:top}
+.gallery figcaption{color:var(--muted);font-size:.8rem;margin-top:6px}
 
 /* full-size screenshot viewer */
 .gallery img,.phone img{cursor:zoom-in}
@@ -390,8 +395,9 @@ html.h .rail a:hover{color:var(--ink)}
     <div>
       <h3>The Skin Shelf</h3>
       <div class="tagline">Skincare marketplace, 2026, collaboration</div>
-      <p>A skincare store with three sides. Customers shop with search, filters, a wishlist and cash-on-delivery checkout. Sellers run their shop from a studio with revenue analytics, and admins watch the whole platform.</p>
+      <p>A skincare store with three sides. Customers browse by category, search, filter by price and stock, save a wishlist and check out with cash on delivery. Sellers run their shop from a studio with revenue analytics, and admins watch the whole platform.</p>
       <ul class="points">
+        <li>Customer storefront with filters, wishlist, bag and checkout</li>
         <li>Seller analytics: revenue trend, top products, low-stock alerts</li>
         <li>Admin view of platform sales, orders and top sellers</li>
         <li>Whole back end runs locally with one Docker command</li>
@@ -401,9 +407,11 @@ html.h .rail a:hover{color:var(--ink)}
         <a href="https://github.com/0xletuss/theskinshelf">Storefront code</a>
       </div>
     </div>
-    <div class="gallery">
-      <img src="img/skinshelf-seller.jpg" alt="Skin Shelf seller dashboard: total revenue, orders, products, low stock, a six-month revenue bar chart and top-selling products" loading="lazy">
-      <img src="img/skinshelf-admin.jpg" alt="Skin Shelf admin dashboard: platform-wide sales, orders, users and products, recent orders and top sellers" loading="lazy">
+    <div class="gallery grid4">
+      <figure><img src="img/skinshelf-shop.jpg" alt="Skin Shelf customer shop: category chips, filters, search and product cards with ratings and stock badges" loading="lazy"><figcaption>Customer: shop</figcaption></figure>
+      <figure><img src="img/skinshelf-product.jpg" alt="Skin Shelf product page with price, discount, add to bag, buy now and delivery details" loading="lazy"><figcaption>Customer: product page</figcaption></figure>
+      <figure><img src="img/skinshelf-seller.jpg" alt="Skin Shelf seller dashboard: total revenue, orders, products, low stock, a six-month revenue bar chart and top-selling products" loading="lazy"><figcaption>Seller: sales analytics</figcaption></figure>
+      <figure><img src="img/skinshelf-admin.jpg" alt="Skin Shelf admin dashboard: platform-wide sales, orders, users and products, recent orders and top sellers" loading="lazy"><figcaption>Admin: platform overview</figcaption></figure>
     </div>
   </article>
 </section>
