@@ -115,6 +115,18 @@ html.h .hero-art{inset:auto;width:auto;height:165vh;max-width:none;object-fit:fi
   top:calc(50% - 100.7vh);left:calc(68% - 45.3vh);
   -webkit-mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%)}
 html.h.at-hero header{background:transparent}
+/* light mode = sunrise in orbit: the Earth's edge rises along the bottom, the atmosphere glows, the sun breaks over it */
+.hero::before{content:"";position:absolute;inset:0;z-index:0;mix-blend-mode:screen;pointer-events:none;opacity:0;transition:opacity 1.4s ease;
+  background:radial-gradient(ellipse 70% 55% at 72% 100%,rgba(255,168,84,.30),transparent 70%),radial-gradient(ellipse 90% 60% at 50% 105%,rgba(70,140,235,.22),transparent 75%)}
+.horizon{position:absolute;z-index:-2;pointer-events:none;width:280%;aspect-ratio:1;left:-85%;top:calc(100% - 19vh);border-radius:50%;
+  background:radial-gradient(circle at 50% 0%,#14345e 0%,#0b2242 6%,#06142a 18%,#040c1a 40%);
+  box-shadow:0 -1px 0 1px rgba(190,230,255,.95),0 -6px 14px rgba(120,195,255,.75),0 -22px 48px rgba(70,145,255,.45),0 -70px 140px rgba(255,165,80,.32);
+  opacity:0;transform:translateY(6vh);transition:opacity 1.2s ease,transform 1.6s cubic-bezier(.2,.7,.2,1)}
+.horizon .sun{position:absolute;left:60%;top:1.01%;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;
+  background:radial-gradient(circle,#fff 0 5px,#fff4d6 9px,rgba(255,206,130,.75) 22px,rgba(255,160,70,.28) 60px,transparent 110px)}
+:root[data-theme="light"] .hero::before{opacity:1}
+:root[data-theme="light"] .horizon{opacity:1;transform:none}
+html.theming .horizon,html.theming .hero::before{transition:opacity 1.2s ease,transform 1.6s cubic-bezier(.2,.7,.2,1)!important}
 /* phones and short windows: the astronaut gets its own strip under the buttons instead of sitting behind text */
 html:not(.h) .hero{display:flex;flex-direction:column;padding-bottom:0}
 html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
@@ -431,6 +443,7 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 <main class="track">
 
 <section class="panel hero space" id="top">
+  <div class="horizon" aria-hidden="true"><span class="sun"></span></div>
   <img class="hero-art" src="img/hero.jpg" alt="" aria-hidden="true">
   <div class="hero-grid">
     <div>
