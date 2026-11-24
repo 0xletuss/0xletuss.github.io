@@ -115,6 +115,14 @@ html.h .hero-art{inset:auto;width:auto;height:165vh;max-width:none;object-fit:fi
   top:calc(50% - 100.7vh);left:calc(68% - 45.3vh);
   -webkit-mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%)}
 html.h.at-hero header{background:transparent}
+/* light mode: the hero turns into a sunlit amber panel; the photo is screen-blended so its black space drops away */
+:root[data-theme="light"] .space,:root[data-theme="light"].h.at-hero header,:root[data-theme="light"].h.at-hero .rail{
+  --slate:#c99417;--slate-2:#d8a72a;--line:rgba(29,22,5,.28);--ink:#1a1304;--muted:#2a1f06;--signal:#1d1605;
+  --signal-soft:rgba(29,22,5,.12);--on-signal:#f6d36b;--signal-hover:#3a2c08;--chip:rgba(29,22,5,.1);--chip-ink:#1d1605
+}
+:root[data-theme="light"] .hero{background:radial-gradient(ellipse 60% 70% at 72% 52%,#f2c94c 0%,#d9a521 38%,#b07f12 78%,#8f6409 100%)}
+:root[data-theme="light"] .hero-art{mix-blend-mode:screen;filter:grayscale(.3) brightness(.78) contrast(1.75)}
+:root[data-theme="light"] .hero .btn.ghost{border-color:rgba(29,22,5,.45)}
 /* phones and short windows: the astronaut gets its own strip under the buttons instead of sitting behind text */
 html:not(.h) .hero{display:flex;flex-direction:column;padding-bottom:0}
 html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
@@ -149,7 +157,7 @@ html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
 
 /* experience: a left-to-right path, oldest first */
 .path{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);--pgap:28px;gap:var(--pgap);position:relative}
-.path::before{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:var(--line)}
+.path::before{content:"";position:absolute;left:0;right:calc((100% - 4 * var(--pgap)) / 5 + var(--pgap));top:6px;height:2px;background:var(--line)}
 .job{position:relative;padding-top:30px}
 .job::before{content:"";position:absolute;left:0;top:0;width:14px;height:14px;border-radius:50%;background:var(--slate);border:2px solid var(--signal)}
 .job.now::before{background:var(--signal)}
@@ -160,16 +168,20 @@ html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
 .job p{color:var(--muted);font-size:.93rem}
 /* the open stop: dashed road ahead, a pulsing empty dot, and a way to claim it */
 .job.next::before{display:none}
-.next-icon{position:absolute;left:-14px;top:-14px;width:42px;height:42px;display:grid;place-items:center;border-radius:50%;
-  background:var(--slate);color:var(--signal);box-shadow:0 0 0 1px var(--line)}
-.next-icon svg{width:24px;height:24px;overflow:visible}
-@keyframes cruise{0%,100%{translate:0 0}50%{translate:3px -3px}}
+.next-icon{position:absolute;left:-14px;top:-14px;width:42px;height:42px;display:grid;place-items:center;color:var(--signal);
+  background:radial-gradient(circle,var(--slate) 0 13px,transparent 14px)}
+.next-icon svg{width:26px;height:26px;overflow:visible;transform:rotate(45deg)}
+@keyframes cruise{0%,100%{translate:0 0}50%{translate:5px -1px}}
 @keyframes flicker{from{opacity:.35}to{opacity:1}}
 .anim .next-icon{transform:scale(0);transition:transform .5s cubic-bezier(.3,1.7,.5,1);transition-delay:calc(.25s + var(--d,0) * .2s)}
 .anim .seen .next-icon{transform:none;animation:cruise 3.2s ease-in-out 2s infinite}
 .anim .seen .next-icon .flame{animation:flicker .45s ease-in-out infinite alternate}
-.job.next::after{content:"";position:absolute;top:6px;left:calc(-1 * var(--pgap));right:0;height:2px;
-  background:repeating-linear-gradient(90deg,var(--signal) 0 6px,transparent 6px 12px),var(--slate);opacity:.8}
+.job.next::after{content:"";position:absolute;top:6px;left:calc(-1 * var(--pgap) - 14px);right:0;height:2px;
+  background:repeating-linear-gradient(90deg,var(--signal) 0 6px,transparent 6px 12px);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(var(--pgap) + 14px),rgba(0,0,0,.35) calc(var(--pgap) + 40px),transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(var(--pgap) + 14px),rgba(0,0,0,.35) calc(var(--pgap) + 40px),transparent 100%)}
+@keyframes trail{to{background-position:12px 0}}
+.anim .seen .job.next::after{animation:trail .6s linear infinite}
 .job.next h3{color:var(--signal)}
 .next-cta{margin-top:14px;padding:9px 16px;font-size:.92rem}
 
@@ -333,6 +345,7 @@ html.h .rail li:last-child a{align-items:flex-end}
   .path::before{left:6px;right:auto;top:0;bottom:0;width:2px;height:auto}
   .job{padding:0 0 0 32px}
   .job.next::after{display:none}
+  .next-icon svg{transform:rotate(135deg)}
   .cards{grid-template-columns:1fr 1fr}
   .gallery{width:100%}
   .auto{grid-template-columns:1fr}
