@@ -279,6 +279,8 @@ html.h #skinshelf .gallery{width:min(660px,calc((var(--avail) - var(--cardpad) -
 .edu{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
 .edu b{display:block;font-weight:600}
 .edu span{color:var(--muted)}
+.mail{display:inline-block;align-self:flex-start;margin-top:-8px;font-size:clamp(1.15rem,2.2vw,1.6rem);font-weight:600;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--signal);padding-bottom:2px;overflow-wrap:anywhere}
+.mail:hover{color:var(--signal)}
 .contact small{display:block;margin-top:40px;color:var(--muted)}
 
 /* progress rail (vertical mode: thin line on the left edge) */
@@ -715,9 +717,11 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 
 <section class="panel contact" id="contact">
   <h2>Let's work together</h2>
-  <p class="lede">Open to network, developer and automation roles: on-site in Cebu and nearby, hybrid or remote. The fastest way to reach me is LinkedIn.</p>
-  <div class="cta" style="margin-top:0">
-    <a class="btn primary" href="https://www.linkedin.com/in/earl-lawrence-banawa-7977671a0">Message me on LinkedIn</a>
+  <p class="lede">Open to network, developer and automation roles: on-site in Cebu and nearby, hybrid or remote. Email me, or message me on LinkedIn.</p>
+  <a class="mail" href="mailto:banawaearllawrence@gmail.com">banawaearllawrence@gmail.com</a>
+  <div class="cta">
+    <a class="btn primary" href="mailto:banawaearllawrence@gmail.com?subject=Project%20inquiry">Email me</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/earl-lawrence-banawa-7977671a0">LinkedIn</a>
     <a class="btn ghost" href="https://github.com/0xletuss">GitHub</a>
   </div>
   <small>© 2026 Earl Lawrence Banawa</small>
