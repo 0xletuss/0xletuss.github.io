@@ -115,6 +115,21 @@ html.h .hero-art{inset:auto;width:auto;height:165vh;max-width:none;object-fit:fi
   top:calc(50% - 100.7vh);left:calc(68% - 45.3vh);
   -webkit-mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%);mask-image:radial-gradient(ellipse 58% 34% at 49% 61%,#000 45%,transparent 100%)}
 html.h.at-hero header{background:transparent}
+/* light mode draws the Earth below in flat technical linework: a crisp limb, a globe grid, and network links between nodes */
+.globe{position:absolute;left:0;right:0;bottom:0;width:100%;height:30vh;z-index:-2;pointer-events:none;
+  opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.globe .g-earth{fill:#0c1d36}
+.globe .g-halo{fill:none;stroke:rgba(150,200,240,.22);stroke-width:1}
+.globe .g-limb{fill:none;stroke:#9cc8ec;stroke-width:1.5}
+.globe .g-lat{fill:none;stroke:rgba(200,220,240,.16);stroke-width:1;stroke-dasharray:2 6}
+.globe .g-lon{stroke:rgba(200,220,240,.10);stroke-width:1}
+.globe .g-link{fill:none;stroke:var(--signal);stroke-width:1.25;stroke-dasharray:4 5;opacity:.55}
+.globe .g-node{fill:#0c1d36;stroke:var(--signal);stroke-width:1.5}
+:root[data-theme="light"] .globe{opacity:1;transform:none}
+html.theming .globe{transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)!important}
+@keyframes g-flow{to{stroke-dashoffset:-18}}
+.anim .globe .g-flow{animation:g-flow 1.4s linear infinite}
+html:not(.h) .globe{display:none}
 /* phones and short windows: the astronaut gets its own strip under the buttons instead of sitting behind text */
 html:not(.h) .hero{display:flex;flex-direction:column;padding-bottom:0}
 html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
@@ -431,6 +446,15 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 <main class="track">
 
 <section class="panel hero space" id="top">
+  <svg class="globe" viewBox="0 0 1600 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs><clipPath id="earth-clip"><circle cx="800" cy="2600" r="2400"/></clipPath></defs>
+    <circle cx="800" cy="2600" r="2412" class="g-halo"/>
+    <circle cx="800" cy="2600" r="2400" class="g-earth"/>
+    <g clip-path="url(#earth-clip)"><circle cx="800" cy="2600" r="2370" class="g-lat" /><circle cx="800" cy="2600" r="2330" class="g-lat" /><circle cx="800" cy="2600" r="2280" class="g-lat" /><line x1="800" y1="2600" x2="-176.2" y2="407.5" class="g-lon"/><line x1="800" y1="2600" x2="138.5" y2="293.0" class="g-lon"/><line x1="800" y1="2600" x2="466.0" y2="223.4" class="g-lon"/><line x1="800" y1="2600" x2="800.0" y2="200.0" class="g-lon"/><line x1="800" y1="2600" x2="1134.0" y2="223.4" class="g-lon"/><line x1="800" y1="2600" x2="1461.5" y2="293.0" class="g-lon"/><line x1="800" y1="2600" x2="1776.2" y2="407.5" class="g-lon"/></g>
+    <circle cx="800" cy="2600" r="2400" class="g-limb"/>
+    <path d="M470.2 253.1 Q800.0 143.1 1129.8 253.1" class="g-link g-flow"/><path d="M800.0 320.0 Q964.9 236.6 1129.8 253.1" class="g-link"/>
+    <circle cx="157.8" cy="360.3" r="4" class="g-node"/><circle cx="470.2" cy="253.1" r="4" class="g-node"/><circle cx="800.0" cy="320.0" r="4" class="g-node"/><circle cx="1129.8" cy="253.1" r="4" class="g-node"/><circle cx="1442.2" cy="360.3" r="4" class="g-node"/>
+  </svg>
   <img class="hero-art" src="img/hero.jpg" alt="" aria-hidden="true">
   <div class="hero-grid">
     <div>
