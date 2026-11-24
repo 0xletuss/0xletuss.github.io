@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earl Lawrence Banawa</title>
+<meta name="description" content="Earl Lawrence Banawa, full-stack developer. Point-of-sale, checkout, delivery and ordering systems built with Python and JavaScript.">
+<meta property="og:title" content="Earl Lawrence Banawa">
+<meta property="og:description" content="Full-stack developer building the systems behind the counter.">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/215154076?v=4&s=64">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --slate:#151c2b;      /* page */
+  --slate-2:#1d2639;    /* raised */
+  --line:#2c3650;
+  --ink:#e4e8f0;
+  --muted:#8e98ad;
+  --vfd:#6fd6c8;        /* POS customer-display teal */
+  --paper:#ece8df;
+  --paper-ink:#2a2a2e;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--slate);color:var(--ink);font:400 1.0625rem/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--vfd);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* header */
+header{display:flex;justify-content:space-between;align-items:center;padding:28px 0}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:600}
+.brand img{width:34px;height:34px;border-radius:50%}
+nav{display:flex;gap:22px;font-size:.95rem}
+nav a{text-decoration:none;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;padding:56px 0 96px}
+.hero h1{font-size:clamp(2.6rem,6.2vw,4.9rem);line-height:.98;font-weight:800;letter-spacing:-.035em;font-variation-settings:"opsz" 96}
+.hero p{margin-top:28px;max-width:34ch;font-size:1.2rem;color:var(--muted)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.btn{display:inline-block;padding:12px 20px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.98rem}
+.btn.primary{background:var(--vfd);color:#0f1a1f}
+.btn.primary:hover{background:#8be3d7}
+.btn.ghost{border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--muted)}
+
+/* receipt */
+.receipt-slot{position:relative;justify-self:center;width:100%;max-width:340px}
+.receipt-slot::before{content:"";display:block;height:14px;margin:0 -14px;background:var(--slate-2);border-radius:7px;border:1px solid var(--line)}
+.receipt{position:relative;margin:-7px 6px 0;background:var(--paper);color:var(--paper-ink);font:400 .82rem/1.55 var(--mono);padding:26px 22px 30px;
+  --tooth:8px;
+  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - var(--tooth)) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/calc(var(--tooth)*2) var(--tooth) repeat-x;
+          mask:linear-gradient(#000 0 0) top/100% calc(100% - var(--tooth)) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/calc(var(--tooth)*2) var(--tooth) repeat-x;
+  transform-origin:top;animation:print 1.6s steps(18,end) .3s both}
+@keyframes print{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.receipt .c{text-align:center}
+.receipt .big{font-weight:500;font-size:.95rem;letter-spacing:.04em}
+.receipt hr{border:0;border-top:1px dashed #9a978f;margin:12px 0}
+.receipt .row{display:flex;justify-content:space-between;gap:12px}
+.receipt .tot{font-weight:500;font-size:.92rem}
+.barcode{height:44px;margin:16px 8px 6px;background:repeating-linear-gradient(90deg,var(--paper-ink) 0 2px,transparent 2px 4px,var(--paper-ink) 4px 5px,transparent 5px 8px,var(--paper-ink) 8px 11px,transparent 11px 12px,var(--paper-ink) 12px 13px,transparent 13px 17px)}
+
+/* sections */
+section{padding:88px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:800;letter-spacing:-.025em;line-height:1.1;margin-bottom:12px}
+.lede{color:var(--muted);max-width:56ch;margin-bottom:48px}
+
+/* featured project */
+.feature{display:grid;grid-template-columns:1fr 1fr;gap:48px;background:var(--slate-2);border:1px solid var(--line);border-radius:14px;padding:40px;margin-bottom:56px}
+.feature h3{font-size:1.9rem;font-weight:800;letter-spacing:-.02em}
+.tagline{color:var(--vfd);font-family:var(--mono);font-size:.85rem;margin:6px 0 18px}
+.feature p{color:var(--muted);max-width:52ch}
+.feature ul{margin:18px 0 0 1.1em;color:var(--ink)}
+.feature li{margin:4px 0}
+.feature .stack{margin:18px 0 0}
+.feature .stack li{margin:0}
+.vfd{background:#0d1418;border:1px solid #23343a;border-radius:8px;padding:18px 18px 14px;align-self:center}
+.vfd-head{display:flex;justify-content:space-between;font:500 .78rem/1 var(--mono);color:var(--vfd);margin-bottom:12px;text-shadow:0 0 8px rgba(111,214,200,.45)}
+.vfd svg{display:block;width:100%;height:auto}
+.vfd-legend{display:flex;gap:18px;margin-top:10px;font:400 .74rem var(--mono);color:#7d9a9a}
+.vfd-legend span::before{content:"";display:inline-block;width:14px;height:0;border-top:2px solid #b8c6c6;vertical-align:middle;margin-right:6px}
+.vfd-legend span.f::before{border-top:2px dashed var(--vfd)}
+
+/* project list */
+.projects{list-style:none}
+.proj{display:grid;grid-template-columns:220px 1fr 220px;gap:32px;padding:30px 0;border-top:1px solid var(--line)}
+.proj:last-child{border-bottom:1px solid var(--line)}
+.proj h3{font-size:1.35rem;font-weight:600;letter-spacing:-.01em}
+.proj .when{color:var(--muted);font-size:.9rem;margin-top:2px}
+.proj p{color:var(--muted);max-width:60ch}
+.proj p strong{color:var(--ink);font-weight:600}
+.stack{display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;margin-top:14px}
+.stack li{list-style:none;font:400 .76rem var(--mono);padding:3px 8px;border-radius:4px;background:#232d43;color:#b9c2d3}
+.links{display:flex;flex-direction:column;gap:6px;font-size:.95rem}
+.links a{color:var(--vfd);text-decoration:none}
+.links a:hover{text-decoration:underline}
+.links .note{color:var(--muted);font-size:.85rem}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.skills h3{font-size:1.05rem;font-weight:600;margin-bottom:12px}
+.skills ul{list-style:none;color:var(--muted)}
+.skills li{padding:3px 0}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1.4fr;gap:56px}
+.about p{color:var(--muted);max-width:60ch;margin-bottom:16px}
+.about p:first-child{color:var(--ink);font-size:1.2rem}
+
+footer{border-top:1px solid var(--line);padding:56px 0 64px}
+footer h2{margin-bottom:20px}
+footer .cta{display:flex;flex-wrap:wrap;gap:14px}
+footer small{display:block;margin-top:48px;color:var(--muted)}
+
+@media (max-width:900px){
+  .hero,.feature,.about{grid-template-columns:1fr}
+  .hero{padding-top:24px;gap:48px}
+  .proj{grid-template-columns:1fr;gap:12px}
+  .links{flex-direction:row;flex-wrap:wrap;gap:18px}
+  .skills{grid-template-columns:repeat(2,1fr)}
+  .feature{padding:28px}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  nav{gap:14px;font-size:.88rem}
+  nav a.hide-sm{display:none}
+  .skills{grid-template-columns:1fr}
+  section{padding:64px 0}
+  .feature{padding:22px}
+}
+@media (prefers-reduced-motion:reduce){
+  .receipt{animation:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="#top"><img src="https://avatars.githubusercontent.com/u/215154076?v=4&s=80" alt="">Earl Banawa</a>
+  <nav>
+    <a href="#work">Work</a>
+    <a class="hide-sm" href="#skills">Skills</a>
+    <a class="hide-sm" href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div>
+    <h1>I build the systems behind the counter.</h1>
+    <p>Full-stack developer from the Philippines. Point-of-sale, checkout, delivery and ordering apps, with Python APIs underneath and fast, plain JavaScript on top.</p>
+    <div class="cta">
+      <a class="btn primary" href="#work">See my projects</a>
+      <a class="btn ghost" href="https://github.com/0xletuss">GitHub</a>
+    </div>
+  </div>
+
+  <div class="receipt-slot" aria-label="Stack summary printed as a receipt">
+    <div class="receipt">
+      <div class="c big">EARL L. BANAWA</div>
+      <div class="c">Full-stack developer, PH</div>
+      <div class="c">github.com/0xletuss</div>
+      <hr>
+      <div class="row"><span>QTY ITEM</span><span>PROJECTS</span></div>
+      <hr>
+      <div class="row"><span>Python + FastAPI</span><span>3</span></div>
+      <div class="row"><span>Python + Flask</span><span>3</span></div>
+      <div class="row"><span>MySQL</span><span>6</span></div>
+      <div class="row"><span>Vanilla JS front ends</span><span>4</span></div>
+      <div class="row"><span>Cloudinary uploads</span><span>6</span></div>
+      <div class="row"><span>Cordova (Android)</span><span>2</span></div>
+      <div class="row"><span>ARIMA forecasting</span><span>1</span></div>
+      <hr>
+      <div class="row tot"><span>SHIPPED APPS</span><span>6</span></div>
+      <div class="row"><span>Commits, Landahan POS</span><span>182</span></div>
+      <hr>
+      <div class="c">Thank you, come again</div>
+      <div class="barcode" aria-hidden="true"></div>
+      <div class="c">0x 1e7055</div>
+    </div>
+  </div>
+</div>
+
+<section id="work">
+  <h2>Projects</h2>
+  <p class="lede">Each one handles real transactions: a sale, an order, a bill, a delivery. Most pair a Python API and MySQL with a front end that runs in the browser or on Android.</p>
+
+  <article class="feature">
+    <div>
+      <h3>Landahan POS</h3>
+      <div class="tagline">Capstone project, 2025–2026</div>
+      <p>A point-of-sale and inventory system for a coconut product distributor. It records sales at the counter, tracks stock across sellers, and forecasts demand so the business knows what to restock before it runs out.</p>
+      <ul>
+        <li>POS checkout, inventory and profit reports</li>
+        <li>ARIMA demand forecasting with pandas and statsmodels</li>
+        <li>Seller management, email password reset, Excel export</li>
+      </ul>
+      <ul class="stack">
+        <li>Flask</li><li>MySQL (Aiven)</li><li>statsmodels</li><li>pandas</li><li>JavaScript</li><li>Flask-Mail</li>
+      </ul>
+      <div class="links" style="margin-top:20px;flex-direction:row;gap:18px">
+        <a href="https://github.com/0xletuss/landahanPOS">Front-end code</a>
+        <span class="note">Back end in a private repo</span>
+      </div>
+    </div>
+    <figure class="vfd" aria-label="Illustration of weekly sales with a dashed forecast continuing past the latest week">
+      <div class="vfd-head"><span>WEEKLY SALES</span><span>FORECAST +6W</span></div>
+      <svg viewBox="0 0 320 170" role="img" aria-hidden="true">
+        <g stroke="#23343a" stroke-width="1">
+          <line x1="0" y1="40" x2="320" y2="40"/><line x1="0" y1="85" x2="320" y2="85"/><line x1="0" y1="130" x2="320" y2="130"/>
+        </g>
+        <path d="M206 92 L224 80 L242 86 L260 70 L278 76 L296 60 L314 66 L314 108 L296 104 L278 118 L260 112 L242 126 L224 118 L206 112 Z" fill="rgba(111,214,200,.12)"/>
+        <polyline fill="none" stroke="#b8c6c6" stroke-width="2" stroke-linejoin="round"
+          points="6,132 24,120 42,126 60,108 78,114 96,98 114,104 132,90 150,100 168,86 186,94 206,102"/>
+        <polyline fill="none" stroke="#6fd6c8" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"
+          points="206,102 224,99 242,106 260,91 278,97 296,82 314,87"/>
+        <line x1="206" y1="14" x2="206" y2="158" stroke="#3b5359" stroke-dasharray="2 3"/>
+        <circle cx="206" cy="102" r="3.5" fill="#6fd6c8"/>
+      </svg>
+      <figcaption class="vfd-legend"><span>Actual</span><span class="f">Forecast + range</span></figcaption>
+    </figure>
+  </article>
+
+  <ul class="projects">
+    <li class="proj">
+      <div><h3>Pasugo</h3><div class="when">2026</div></div>
+      <div>
+        <p>Pay-my-bills and errand delivery app. <strong>Customers</strong> post a request, <strong>riders</strong> get verified, accept it and share live location on a map, and both sides chat in real time. <strong>Admins</strong> handle payments, ratings and complaints.</p>
+        <ul class="stack"><li>FastAPI</li><li>SQLAlchemy</li><li>MySQL</li><li>Redis</li><li>WebSockets</li><li>Cordova</li><li>Leaflet maps</li></ul>
+      </div>
+      <div class="links">
+        <a href="https://github.com/0xletuss/pasugoo">Android app</a>
+        <a href="https://github.com/0xletuss/pasugo">API</a>
+      </div>
+    </li>
+    <li class="proj">
+      <div><h3>The Skin Shelf</h3><div class="when">2026, collaboration</div></div>
+      <div>
+        <p>Skincare store with three sides: a shop with search, filters, wishlist and cash-on-delivery checkout; a seller dashboard; and an admin panel. Ships as a website or a Cordova app, and the whole back end runs locally with one Docker command.</p>
+        <ul class="stack"><li>Flask</li><li>MySQL</li><li>Docker</li><li>JavaScript</li><li>Cordova</li></ul>
+      </div>
+      <div class="links">
+        <a href="https://github.com/0xletuss/theskinshelf">Storefront code</a>
+      </div>
+    </li>
+    <li class="proj">
+      <div><h3>67StreetFood</h3><div class="when">2025</div></div>
+      <div>
+        <p>Ordering and table reservations for street food stalls. Customers browse menus, order or reserve, and message the seller directly. Sellers and admins each get their own dashboard.</p>
+        <ul class="stack"><li>Flask</li><li>Flask-JWT</li><li>SQLAlchemy</li><li>MySQL</li><li>JavaScript</li></ul>
+      </div>
+      <div class="links">
+        <a href="https://github.com/0xletuss/67foodstreet">Front end</a>
+        <a href="https://github.com/0xletuss/67backend">API</a>
+      </div>
+    </li>
+    <li class="proj">
+      <div><h3>Relo and MiniMall</h3><div class="when">2026</div></div>
+      <div>
+        <p>Two multi-seller marketplace APIs. Sign-up is verified by an emailed one-time code, sellers upload product photos to Cloudinary, and buyers move through cart, checkout and order history.</p>
+        <ul class="stack"><li>FastAPI</li><li>SQLAlchemy</li><li>MySQL</li><li>JWT</li><li>Brevo email</li><li>Cloudinary</li></ul>
+      </div>
+      <div class="links">
+        <a href="https://github.com/0xletuss/relo">Relo API</a>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section id="skills">
+  <h2>What I work with</h2>
+  <p class="lede">Grouped by where it sits in the app.</p>
+  <div class="skills">
+    <div><h3>Back end</h3><ul><li>Python</li><li>FastAPI</li><li>Flask</li><li>SQLAlchemy and Alembic</li><li>JWT auth and email OTP</li><li>WebSockets</li></ul></div>
+    <div><h3>Data</h3><ul><li>MySQL</li><li>Redis</li><li>pandas</li><li>statsmodels (ARIMA)</li><li>Excel export</li></ul></div>
+    <div><h3>Front end and mobile</h3><ul><li>HTML, CSS, JavaScript</li><li>Responsive layouts</li><li>Leaflet maps</li><li>Apache Cordova (Android)</li></ul></div>
+    <div><h3>Shipping</h3><ul><li>Git and GitHub</li><li>Docker Compose</li><li>Render and gunicorn</li><li>Aiven managed MySQL</li><li>Cloudinary</li></ul></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about">
+    <h2>About</h2>
+    <div>
+      <p>I'm Earl. I like building software for small businesses: the register, the stockroom, the rider on a motorbike.</p>
+      <p>My projects usually start with the database and the API, then a front end simple enough to run on a cheap phone. I've built role-based dashboards for customers, sellers, riders and admins, real-time chat and location tracking, and a sales forecaster that tells a shop what to restock.</p>
+      <!-- EDUCATION / EXPERIENCE: paste LinkedIn details here, e.g.
+      <p><strong>BS Information Technology</strong>, School Name, 2022–2026</p>
+      -->
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="contact">
+  <h2>Let's talk</h2>
+  <p class="lede" style="margin-bottom:28px">Open to developer roles and freelance projects. The fastest way to reach me is LinkedIn.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://www.linkedin.com/in/earl-lawrence-banawa-7977671a0">Message me on LinkedIn</a>
+    <a class="btn ghost" href="https://github.com/0xletuss">GitHub</a>
+  </div>
+  <small>© 2026 Earl Lawrence Banawa</small>
+</footer>
+
+</div>
+</body>
+</html>
