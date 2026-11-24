@@ -131,15 +131,15 @@ html:not(.h) .hero-art{position:relative;inset:auto;order:2;z-index:0;opacity:1;
 
 /* the stack: network at the bottom, automation on top */
 .stackviz{position:relative;list-style:none;padding-left:40px}
-.stackviz::before{content:"";position:absolute;left:11px;top:22px;bottom:22px;width:2px;background:var(--line)}
+.stackviz::before{content:"";position:absolute;left:11px;top:var(--ln-top,22px);bottom:var(--ln-bottom,22px);width:2px;background:var(--line)}
 .layer{position:relative;display:grid;grid-template-columns:112px 1fr;gap:16px;align-items:baseline;padding:12px 18px;margin-bottom:8px;background:var(--slate-2);border:1px solid var(--line);border-radius:10px;
   animation:lit .5s ease-out both;animation-delay:calc(.25s + var(--i)*.32s)}
 .layer:last-child{margin-bottom:0}
-.layer::before{content:"";position:absolute;left:-34px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--slate);border:2px solid var(--signal)}
+.layer::before{content:"";position:absolute;left:-34px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--slate);border:2px solid var(--signal)}
 .layer b{font-weight:600;font-size:.98rem}
 .layer span{color:var(--muted);font-size:.9rem;line-height:1.45}
-.packet{position:absolute;left:7px;width:10px;height:10px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);bottom:32px;animation:rise 2.1s cubic-bezier(.5,0,.3,1) .25s both}
-@keyframes rise{from{bottom:32px}to{bottom:calc(100% - 42px)}}
+.packet{position:absolute;left:7px;width:10px;height:10px;border-radius:50%;background:var(--signal);box-shadow:0 0 12px var(--signal);top:var(--pk-start,calc(100% - 37px));animation:rise 2.1s cubic-bezier(.5,0,.3,1) .25s both}
+@keyframes rise{from{top:var(--pk-start,calc(100% - 37px))}to{top:var(--pk-end,17px)}}
 @keyframes lit{from{opacity:.35}to{opacity:1}}
 .stack-cap{margin:12px 0 0 40px;font-size:.85rem;color:var(--muted)}
 
@@ -365,7 +365,7 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 
 @media (prefers-reduced-motion:reduce){
   .layer,.packet{animation:none}
-  .packet{bottom:calc(100% - 42px)}
+  .packet{top:var(--pk-end,17px)}
 }
 </style>
 </head>
@@ -641,6 +641,21 @@ html.theming,html.theming *,html.theming *::before,html.theming *::after{transit
 <dialog class="lightbox" id="lightbox" aria-label="Screenshot"><img alt=""><p>Click anywhere or press Esc to close</p></dialog>
 
 <script>
+(function(){
+  var ol=document.querySelector(".stackviz"); if(!ol)return;
+  function place(){
+    var layers=ol.querySelectorAll(".layer"); if(!layers.length)return;
+    var o=ol.getBoundingClientRect(), top=layers[0].getBoundingClientRect(), bot=layers[layers.length-1].getBoundingClientRect();
+    var yTop=top.top+top.height/2-o.top, yBot=bot.top+bot.height/2-o.top;
+    ol.style.setProperty("--pk-end",(yTop-5)+"px");
+    ol.style.setProperty("--pk-start",(yBot-5)+"px");
+    ol.style.setProperty("--ln-top",yTop+"px");
+    ol.style.setProperty("--ln-bottom",(o.height-yBot)+"px");
+  }
+  place();
+  addEventListener("resize",place);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);
+})();
 (function(){
   var root=document.documentElement, btn=document.getElementById("theme-toggle");
   function label(){var next=root.getAttribute("data-theme")==="light"?"dark":"light";btn.setAttribute("aria-label","Switch to "+next+" mode");btn.title="Switch to "+next+" mode"}
